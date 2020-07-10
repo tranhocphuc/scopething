@@ -127,7 +127,7 @@ class Scope(vm.VirtualMachine):
         dh = params.ha*hi + params.hb*lo + params.hc
         return dl, dh
 
-    async def capture(self, channels=['A'], trigger=None, trigger_level=None, trigger_type='rising', hair_trigger=False,
+    async def capture(self, channels=['A'], trigger=None, trigger_level=None, trigger_type='rising', hair_trigger=False, trace_delay=0,
                       period=1e-3, nsamples=1000, timeout=None, low=None, high=None, raw=False, trigger_position=0.25, probes='x1'):
         analog_channels = set()
         logic_channels = set()
@@ -277,7 +277,7 @@ class Scope(vm.VirtualMachine):
             await self.set_registers(TraceMode=capture_mode.trace_mode, BufferMode=capture_mode.buffer_mode,
                                      SampleAddress=0, ClockTicks=ticks, ClockScale=clock_scale,
                                      TriggerLevel=analog_trigger_level, TriggerLogic=trigger_logic, TriggerMask=trigger_mask,
-                                     TraceIntro=trace_intro, TraceOutro=trace_outro, TraceDelay=0, Timeout=trigger_timeout,
+                                     TraceIntro=trace_intro, TraceOutro=trace_outro, TraceDelay=trace_delay, Timeout=trigger_timeout,
                                      TriggerIntro=trigger_intro//2, TriggerOutro=trigger_outro//2, Prelude=0,
                                      SpockOption=spock_option, ConverterLo=lo, ConverterHi=hi,
                                      KitchenSinkA=kitchen_sink_a, KitchenSinkB=kitchen_sink_b,
